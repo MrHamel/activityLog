@@ -45,17 +45,7 @@ def test_file_writable():
 	
 	return False
 
-def get_loadavgs():
-	try:
-		with open("/proc/loadavg", "r") as loadavgfile:
-			for line in loadavgfile:
-				line = line.split(' ');
-				return {line[0], line[1], line[2]}
-	except IOError:
-    		print("Unable to open /proc/mounts.")
-    		return False
-
-	return False
+def get_loadavgs(): return os.loadavg()
 
 def run_shell_cmd(cmd):
 	args = shlex.split(cmd)
