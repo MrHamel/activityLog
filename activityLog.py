@@ -17,8 +17,8 @@ def get_hostname():
 		with open("/etc/hostname", "r") as hostnamefile:
 			return hostnamefile.read
 	except IOError:
-	    	print("Unable to open /etc/hostname.")
-    		return False
+		print("Unable to open /etc/hostname.")
+		return False
 
 	return False
 
@@ -28,8 +28,8 @@ def root_fs_mountable():
 			for line in mountfile:
 				if " / " in line and " rw," in line: return True
 	except IOError:
-    		print("Unable to open /proc/mounts.")
-	    	return False
+		print("Unable to open /proc/mounts.")
+		return False
 
 	return False
 
@@ -40,9 +40,9 @@ def test_file_writable():
 		os.remove("/activityLog_test")
 		return True
 	except IOError:
-    		print("Unable to create test file in /.")
-	    	return False
-	
+		print("Unable to create test file in /.")
+		return False
+
 	return False
 
 def get_loadavgs(): return os.loadavg()
@@ -60,27 +60,27 @@ def run_shell_cmd(cmd):
 
 def get_top_data():
 	try:
-        	with open("/root/.toprc", "r") as topfile:
-                	data = topfile.readlines()
+		with open("/root/.toprc", "r") as topfile:
+			data = topfile.readlines()
 	except IOError:
 		data = [""]
 
 	with open("/root/.toprc", "w") as topfile:
-                topfile.write('RCfile for \"top with windows\"\n')
-                topfile.write("Id:a, Mode_altscr=0, Mode_irixps=1, Delay_time=3.000, Curwin=0\n")
-                topfile.write("Def     fieldscur=AEHIOQTWKNMbcdfgjplrsuvyzX\n")
-                topfile.write("        winflags=30137, sortindx=10, maxtasks=0\n")
-                topfile.write("        summclr=1, msgsclr=1, headclr=3, taskclr=1\n")
-                topfile.write("Job     fieldscur=ABcefgjlrstuvyzMKNHIWOPQDX\n")
-                topfile.write("        winflags=62777, sortindx=0, maxtasks=0\n")
-                topfile.write("        summclr=6, msgsclr=6, headclr=7, taskclr=6\n")
-                topfile.write("Mem     fieldscur=ANOPQRSTUVbcdefgjlmyzWHIKX\n")
-                topfile.write("        winflags=62777, sortindx=13, maxtasks=0\n")
-                topfile.write("        summclr=5, msgsclr=5, headclr=4, taskclr=5\n")
-                topfile.write("Usr     fieldscur=ABDECGfhijlopqrstuvyzMKNWX\n")
-                topfile.write("        winflags=62777, sortindx=4, maxtasks=0\n")
-                topfile.write("        summclr=3, msgsclr=3, headclr=2, taskclr=3\n")
-	
+		topfile.write('RCfile for \"top with windows\"\n')
+		topfile.write("Id:a, Mode_altscr=0, Mode_irixps=1, Delay_time=3.000, Curwin=0\n")
+		topfile.write("Def     fieldscur=AEHIOQTWKNMbcdfgjplrsuvyzX\n")
+		topfile.write("        winflags=30137, sortindx=10, maxtasks=0\n")
+		topfile.write("        summclr=1, msgsclr=1, headclr=3, taskclr=1\n")
+		topfile.write("Job     fieldscur=ABcefgjlrstuvyzMKNHIWOPQDX\n")
+		topfile.write("        winflags=62777, sortindx=0, maxtasks=0\n")
+		topfile.write("        summclr=6, msgsclr=6, headclr=7, taskclr=6\n")
+		topfile.write("Mem     fieldscur=ANOPQRSTUVbcdefgjlmyzWHIKX\n")
+		topfile.write("        winflags=62777, sortindx=13, maxtasks=0\n")
+		topfile.write("        summclr=5, msgsclr=5, headclr=4, taskclr=5\n")
+		topfile.write("Usr     fieldscur=ABDECGfhijlopqrstuvyzMKNWX\n")
+		topfile.write("        winflags=62777, sortindx=4, maxtasks=0\n")
+		topfile.write("        summclr=3, msgsclr=3, headclr=2, taskclr=3\n")
+
 	topdata = run_shell_cmd("top -bH -n1")
 
 	if data != [""]:
@@ -96,16 +96,16 @@ def run_sql_cmd(cmd):
 	# Engine Format: engine://user:password@ip:port/database
 	# Read for more info: http://docs.sqlalchemy.org/en/rel_1_0/core/engines.html
 	engine = sqlalchemy.create_engine('')
-    
-    	# PostgreSQL: sql = text('SELECT * FROM pg_stat_activity');
-    	# MySQL + oracle: sql = text('show full processlist;')
-    	# MSSQL: sql = text('sp_who2;')
-    	# SQLite: lol what.
-    	result = engine.execute('')
-    	names = []
-    	for row in result:
-    		names.append(row[0])
-	
+
+	# PostgreSQL: sql = text('SELECT * FROM pg_stat_activity');
+	# MySQL + oracle: sql = text('show full processlist;')
+	# MSSQL: sql = text('sp_who2;')
+	# SQLite: lol what.
+	result = engine.execute('')
+	names = []
+	for row in result:
+		names.append(row[0])
+
 	print names
 
 '''RHEL Related Functions'''
@@ -119,8 +119,8 @@ def detect_rhel_ver():
 		# Since this is RHEL based, we only need the major version number.
 		return data[0]
 	except IOError:
-	    	print("Unable to open /etc/redhat-release.")
-    		return False
+		print("Unable to open /etc/redhat-release.")
+		return False
 
 	return False
 
@@ -128,16 +128,15 @@ def detect_rhel_ver():
 def timestamp(): return time.strftime("%m_%d_%Y-%H_%M_%S")
 
 def create_targz(name, file):
-        try:
-                with tarfile.open("/root/activityLog/" + name, "w:gz") as archive:
-                        archive.add("/root/activityLog/" + file, arcname=file)
+	try:
+		with tarfile.open("/root/activityLog/" + name, "w:gz") as archive:
+			archive.add("/root/activityLog/" + file, arcname=file)
+		return True
+	except IOError:
+		print("Unable to save into activityLog archive.")
+		return False
 
-                return True
-        except IOError:
-                print("Unable to save into activityLog archive.")
-                return False
-
-        return False
+	return False
 
 def alert_qn_support():
 	msg = MIMEMultipart()
@@ -164,8 +163,8 @@ def main():
 	#parser.add_argument('foo', nargs='+')
 
 	#if len(sys.argv)==1:
-	#    parser.print_help()
-	#    sys.exit(1)
+	#	parser.print_help()
+	#	sys.exit(1)
 
 	args=parser.parse_args()
 
@@ -200,7 +199,7 @@ def main():
 		activityLog.write("SQL Queries Active at " + timestamp())
 
 	create_targz("activityLog.tar.gz", filename)
-	os.remove("/root/activityLog/" + filename)	
+	os.remove("/root/activityLog/" + filename)
 
 	# Email Support
 	# alert_support()
